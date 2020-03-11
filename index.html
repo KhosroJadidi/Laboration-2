@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="sv">
-  <head>
-    <link rel="stylesheet" href="style.css" />
-    <script type="text/javascript" src="script.js"></script>
-  </head>
-  <body>
-    <header>
-      <h1>Välkommen till bokfavoriten</h1>
-    </header>
+
+<head>
+  <link rel="stylesheet" href="style.css" />
+  <script type="text/javascript" src="script.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Välkommen till bokfavoriten</h1>
+  </header>
+  <section>
     <div class="new_list_button">
       <button id="new_list_button" onclick="loadNewList()">
         Ny Lista
@@ -23,29 +26,39 @@
       <button id="add_book-button" onclick="addBook()">Lägg till bok</button>
       <button id="filter_button" onclick="filterBooksInList()">filtrera</button>
     </div>
-    <div class="change_and_remove_buttons">
-      <button id="change_book_button" onclick="changeSelectedBook()">
-        Ändra bok
-      </button>
-      <button id="remove_book_button" onclick="removeSelectedBook()">
-        Ta bort bok
-      </button>
-    </div>
-    <div class="author_and_title_input_fields">
-      <label for="author_name">Författare</label>
-      <input type="text" name="author_name" id="123" />
-      <label for="title">Titel</label>
-      <input type="text" name="title" />
-    </div>
-    <div class="message_output">
-      <h2>
-        TODO: bekräftelse meddelandet kommer synas här(ta bort denna text!!!)
-      </h2>
-    </div>
-  </body>
-  <footer>
-    <h1>Footer Kanske???</h1>
-  </footer>
+  </section>
+  <section class="change_and_remove_buttons">
+    <button id="change_book_button" onclick="changeSelectedBook()">
+      Ändra bok
+    </button>
+    <button id="remove_book_button" onclick="removeSelectedBook()">
+      Ta bort bok
+    </button>
+  </section>
+  <section class="author_and_title_input_fields">
+    <label for="author_name">Författare</label>
+    <input type="text" name="author_name" id="123" />
+    <label for="title">Titel</label>
+    <input type="text" name="title" />
+    <br>
+    <button>
+      Filter
+    </button>
+    <button>
+      Rensa Filter
+    </button>
+  </section>
+  <section class="message_output">
+
+    <h2>
+      TODO: bekräftelse meddelandet kommer synas här(ta bort denna text!!!)
+    </h2>
+  </section>
+</body>
+<footer>
+  <h1>Footer Kanske???</h1>
+</footer>
+
 </html>
 
-        <!-- Jobba mer med section, nav osv? -->
+<!-- Jobba mer med section, nav osv? -->
