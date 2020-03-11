@@ -4,6 +4,7 @@ window.addEventListener('load', () => {
 
     function loadNewList() {
         //load a new list here
+        newlistButton.innerHTML='change text';//denna func är en test
     };
     let addBookButton = document.getElementById('add_book-button');
     addBookButton.onclick = addBook;
@@ -28,5 +29,5 @@ window.addEventListener('load', () => {
 
     function removeSelectedBook() {
         //remove selected book here
-    };
+    };    
 });
