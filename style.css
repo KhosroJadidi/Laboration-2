@@ -1,4 +1,7 @@
 header{
+    background-image: url("http://www.loganberrybooks.com/img/about/mural%20final%20layout.jpg");
+    background-size: auto 100px;
+    height: 102px;
     text-align: center;
 }
 
@@ -11,7 +14,11 @@ body{
 }
 
 .listbox{
-    margin: 5px;
+    margin: 20px;
+}
+
+select, option {
+    width: 250px;
 }
 
 .add_and_filter_buttons{

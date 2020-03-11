@@ -47,4 +47,11 @@ window.addEventListener('load', () => {
     function testingthings() {
         testJavaScript.innerHTML = '<p>test test test</p>';
     };
+
+    let listItemSelected = document.getElementById('books');
+    listItemSelected.onselect = Myfunction;
+    
+    function Myfunction() {
+        console.log('hej');
+    };
 });
