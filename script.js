@@ -1,16 +1,26 @@
 window.addEventListener('load', () => {
+    function removeClass(id,classToRemove){
+        let element=document.getElementById(id);
+        element.classList.remove(classToRemove);
+    };
+
+    function addClass(id,classToAdd){
+        let element=document.getElementById(id);
+        element.classList.add(classToAdd);
+    };
+
     let newlistButton = document.getElementById('new_list_button');
     newlistButton.onclick = loadNewList;
 
     function loadNewList() {
         //load a new list here
-        newlistButton.innerHTML = 'change text'; //denna func är en test
     };
     let addBookButton = document.getElementById('add_book-button');
     addBookButton.onclick = addBook;
 
     function addBook() {
         //add book here
+        removeClass('author_and_title_input_fields invisible_id', 'invisible');
     };
     let filterBooks = document.getElementById('filter_button');
     filterBooks.onclick = filterBooksInList;
@@ -32,7 +42,7 @@ window.addEventListener('load', () => {
     };
 
     let testJavaScript = document.getElementsByClassName('change_and_remove_buttons');
-    window.addEventListener('load',testingthings);
+    window.addEventListener('load', testingthings);
 
     function testingthings() {
         testJavaScript.innerHTML = '<p>test test test</p>';
