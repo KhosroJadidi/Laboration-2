@@ -35,6 +35,9 @@ window.addEventListener('load', () => {
 
     function filterBooksInList() {
         //filter books here
+        removeClass('author_and_title_input_fields_id', 'invisible');
+        addClass('filter_button_id','invisible');
+        addClass('add_book-button_id','invisible');
     };
     let changeBook = document.getElementById('change_book_button');
     changeBook.onclick = changeSelectedBook;
