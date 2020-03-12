@@ -9,20 +9,28 @@ window.addEventListener('load', () => {
         element.classList.add(classToAdd);
     };
 
+    function setInnerHTML(id,HTML_Content){
+        let element= document.getElementById(id);
+        element.innerHTML=HTML_Content;
+    };
+
     let newlistButton = document.getElementById('new_list_button');
     newlistButton.onclick = loadNewList;
 
     function loadNewList() {
         //load a new list here
     };
-    let addBookButton = document.getElementById('add_book-button');
+    let addBookButton = document.getElementById('add_book-button_id');
     addBookButton.onclick = addBook;
 
     function addBook() {
         //add book here
-        removeClass('author_and_title_input_fields invisible_id', 'invisible');
+        removeClass('author_and_title_input_fields_id', 'invisible');
+        addClass('filter_button_id','invisible');
+        addClass('add_book-button_id','invisible');
+        setInnerHTML('filter_based_input-id','Lägg till');
     };
-    let filterBooks = document.getElementById('filter_button');
+    let filterBooks = document.getElementById('filter_button_id');
     filterBooks.onclick = filterBooksInList;
 
     function filterBooksInList() {
@@ -41,17 +49,12 @@ window.addEventListener('load', () => {
         //remove selected book here
     };
 
-    let testJavaScript = document.getElementsByClassName('change_and_remove_buttons');
-    window.addEventListener('load', testingthings);
-
-    function testingthings() {
-        testJavaScript.innerHTML = '<p>test test test</p>';
-    };
-
-    let listItemSelected = document.getElementById('books');
-    listItemSelected.onselect = Myfunction;
+    let resetInputFields = document.getElementById('reset_filter_id');
+    resetInputFields.onclick=resetEnteredText;
     
-    function Myfunction() {
-        console.log('hej');
+    function resetEnteredText(){
+        let authorField= document.getElementById('author_id');
+        let titleField= document.getElementById('title_id');
+        authorField.value=titleField.value="";
     };
 });
