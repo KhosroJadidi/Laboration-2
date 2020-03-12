@@ -42,3 +42,11 @@ select, option {
 .invisible{
     display: none;
 }
+
+.success_text{
+    color: green;
+}
+
+.failure_text{
+    color: red;
+}
