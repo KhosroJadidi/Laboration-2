@@ -16,12 +16,13 @@ header{
     height: 102px;
 }
 
-.new_list_button{
-
+button{
+    height: 30px;
+    width: 100px;
 }
 
 .listbox{
-    margin: 20px;
+    margin: 10px;
 }
 
 select, option {
@@ -36,15 +37,25 @@ select, option {
 
 }
 
-.author_and_title_input_fields{
+.input_fields_section{
     width: 250px;
     margin: auto;
     text-align: left;
     line-height: 2;
 }
 
-.message_output{
-    
+.confirm_section{
+    display: inline-flex;
+    text-align: left;
+    margin: auto;
+    border: 0px;
+    width: 230px;
+}
+
+.confirm_section p {
+    vertical-align: text-top;
+    width: 100px;
+    margin-left: 10px;
 }
 
 .invisible{

@@ -40,10 +40,8 @@ window.addEventListener('load', () => {
 
     function addBook() {
         //add book here
-        removeClass('author_and_title_input_fields_id', 'invisible');
-        addClass('filter_button_id','invisible');
-        addClass('add_book-button_id','invisible');
-        setInnerHTML('filter_based_input-id','Lägg till');
+        removeClass('input_fields_id', 'invisible');
+        removeClass('add_confirm_section', 'invisible')
     };
     
     let filterBooks = document.getElementById('filter_button_id');
@@ -52,8 +50,6 @@ window.addEventListener('load', () => {
     function filterBooksInList() {
         //filter books here
         removeClass('author_and_title_input_fields_id', 'invisible');
-        addClass('filter_button_id','invisible');
-        addClass('add_book-button_id','invisible');
     };
     let changeBook = document.getElementById('change_book_button');
     changeBook.onclick = changeSelectedBook;
@@ -68,7 +64,7 @@ window.addEventListener('load', () => {
         //remove selected book here
     };
 
-    let resetInputFields = document.getElementById('reset_filter_id');
+    let resetInputFields = document.getElementById('filter_reset_button');
     resetInputFields.onclick=resetEnteredText;
     
     function resetEnteredText(){
