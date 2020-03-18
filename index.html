@@ -12,7 +12,7 @@
     <h1>Välkommen till bokfavoriten</h1>
   </header>
 
-  <section>
+  <section class="Main_section">
     <div class="new_list_button">
       <button id="new_list_button" >
         Ny Lista
@@ -28,38 +28,43 @@
       </select>
     </div>
     <div class="add_and_filter_buttons">
-      <button id="add_book-button_id" >Lägg till bok</button>
+      <button id="add_book-button_id">Lägg till bok</button>
       <button id="filter_button_id">Filter</button>
     </div>
   </section>
 
-  <section class="change_and_remove_buttons invisible" id="change_and_remove_buttons_id">
+  <section class="change_and_remove_section invisible" id="change_and_remove_buttons_id">
     <button id="change_book_button">Ändra bok</button>
     <button id="remove_book_button">Ta bort bok</button>
   </section>
 
-  <section class="author_and_title_input_fields invisible" id="author_and_title_input_fields_id">
+  <section class="input_fields_section invisible" id="input_fields_id">
     <label for="author_name">Författare</label>
     <input type="text" name="author_name" id="author_id"/>
     <br>
     <label for="title">Titel</label>
     <input type="text" name="title" id="title_id"/>
     <br>
-    <button id="filter_based_input-id" >
-      Filtrera
-    </button>    
-    <button id="reset_filter_id">
-      Rensa
-    </button>
   </section>
 
-  <section class="message_output">
-    <div id="operation_successful" class="invisible success_text">
-      <h3>Klart!</h3>
-    </div>
-    <div id="operation_unsuccessful" class="invisible failure_text">
-      <h3>Misslyckades!</h3>
-    </div>
+  <section class="filter_confirm_clear_section invisible">
+    <button id="filter_confirm_button" >Filtrera</button>    
+    <button id="filter_reset_button">Rensa filter</button>
+  </section>
+
+  <section class="confirm_section invisible" id="add_confirm_section">
+    <button id="add_confirm_button">Lägg till</button>
+    <p class="statustext" id="add_status">Status: </p>
+  </section>
+
+  <section class="confirm_section invisible" id="change_confirm_section">
+    <button id="change_confirm_button">Ändra</button>
+    <p class="statustext" id="change_status">Status: </p>
+  </section>
+
+  <section class="confirm_section invisible" id="remove_confirm_section">
+    <button id="remove_confirm_button">Ta bort</button>
+    <p class="statustext" id="remove_status">Status: </p>
   </section>
 
 </body>
