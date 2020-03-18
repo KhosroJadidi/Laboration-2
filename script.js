@@ -1,6 +1,5 @@
 window.addEventListener('load', () => {
 
-    const request = new XMLHttpRequest();
     const apiURL = "https://www.forverkliga.se/JavaScript/api/crud.php";
     var apiKey = null;
     
@@ -23,7 +22,7 @@ window.addEventListener('load', () => {
     newlistButton.onclick = loadNewList;
 
     function loadNewList() {
-        fetch('https://www.forverkliga.se/JavaScript/api/crud.php?requestKey')
+        fetch(apiURL + '?requestKey')
         .then(function(response) {
             return response.json(); 
         })
