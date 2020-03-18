@@ -1,15 +1,20 @@
 
-header{
-    background-image: url("http://www.loganberrybooks.com/img/about/mural%20final%20layout.jpg");
-    background-size: auto 100px;
-    height: 102px;
-    text-align: center;
-}
-
 body{
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
+header{
+    height: 200px;
+    text-align: center;
+}
+
+#banner {
+    background-image: url("http://www.loganberrybooks.com/img/about/mural%20final%20layout.jpg");
+    background-size: auto 102px;
+    height: 102px;
+}
 
 .new_list_button{
 
@@ -32,7 +37,10 @@ select, option {
 }
 
 .author_and_title_input_fields{
-
+    width: 250px;
+    margin: auto;
+    text-align: left;
+    line-height: 2;
 }
 
 .message_output{
