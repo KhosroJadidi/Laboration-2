@@ -2,6 +2,7 @@ window.addEventListener('load', () => {
 
     const request = new XMLHttpRequest();
     const apiURL = "https://www.forverkliga.se/JavaScript/api/crud.php";
+    var apiKey = null;
     
     function removeClass(id,classToRemove){
         let element=document.getElementById(id);
@@ -22,11 +23,17 @@ window.addEventListener('load', () => {
     newlistButton.onclick = loadNewList;
 
     function loadNewList() {
-        request.open('GET', apiURL + "?requestKey");
-        request.send();
-        request.onreadystatechange = (e) => {
-            console.log(request.responseText)
-        }
+        fetch('https://www.forverkliga.se/JavaScript/api/crud.php?requestKey')
+        .then(function(response) {
+            return response.json(); 
+        })
+        .then(function(data) {
+            apiKey = data.key;
+        })
+        .catch(function(message) {
+            console.log(message)
+        });
+        console.log(apiKey);
     };
 
     let addBookButton = document.getElementById('add_book-button_id');
