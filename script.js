@@ -1,4 +1,8 @@
 window.addEventListener('load', () => {
+
+    const request = new XMLHttpRequest();
+    const apiURL = "https://www.forverkliga.se/JavaScript/api/crud.php";
+    
     function removeClass(id,classToRemove){
         let element=document.getElementById(id);
         element.classList.remove(classToRemove);
@@ -18,8 +22,13 @@ window.addEventListener('load', () => {
     newlistButton.onclick = loadNewList;
 
     function loadNewList() {
-        //load a new list here
+        request.open('GET', apiURL + "?requestKey");
+        request.send();
+        request.onreadystatechange = (e) => {
+            console.log(request.responseText)
+        }
     };
+
     let addBookButton = document.getElementById('add_book-button_id');
     addBookButton.onclick = addBook;
 
@@ -30,6 +39,7 @@ window.addEventListener('load', () => {
         addClass('add_book-button_id','invisible');
         setInnerHTML('filter_based_input-id','Lägg till');
     };
+    
     let filterBooks = document.getElementById('filter_button_id');
     filterBooks.onclick = filterBooksInList;
 

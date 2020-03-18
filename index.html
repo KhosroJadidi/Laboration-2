@@ -8,8 +8,10 @@
 
 <body>
   <header>
+    <div id="banner"></div>
     <h1>Välkommen till bokfavoriten</h1>
   </header>
+
   <section>
     <div class="new_list_button">
       <button id="new_list_button" >
@@ -27,18 +29,15 @@
     </div>
     <div class="add_and_filter_buttons">
       <button id="add_book-button_id" >Lägg till bok</button>
-      
-      <button id="filter_button_id">filtrera</button>
+      <button id="filter_button_id">Filter</button>
     </div>
   </section>
+
   <section class="change_and_remove_buttons invisible" id="change_and_remove_buttons_id">
-    <button id="change_book_button" >
-      Ändra bok
-    </button>
-    <button id="remove_book_button" >
-      Ta bort bok
-    </button>
+    <button id="change_book_button">Ändra bok</button>
+    <button id="remove_book_button">Ta bort bok</button>
   </section>
+
   <section class="author_and_title_input_fields invisible" id="author_and_title_input_fields_id">
     <label for="author_name">Författare</label>
     <input type="text" name="author_name" id="author_id"/>
@@ -47,20 +46,22 @@
     <input type="text" name="title" id="title_id"/>
     <br>
     <button id="filter_based_input-id" >
-      Filter
+      Filtrera
     </button>    
     <button id="reset_filter_id">
       Rensa
     </button>
   </section>
+
   <section class="message_output">
     <div id="operation_successful" class="invisible success_text">
-      <h3>Kalrt!</h3>
+      <h3>Klart!</h3>
     </div>
     <div id="operation_unsuccessful" class="invisible failure_text">
       <h3>Misslyckades!</h3>
     </div>
   </section>
+
 </body>
  <footer>
 </footer> 
