@@ -5,7 +5,7 @@ window.addEventListener("load", () => {
     var viewDataRecievedArray = null;
     let selectedBook = null;
 
-    function removeClass(id, classToRemove) {
+    function removeClassFromId(id, classToRemove) {
         let element = document.getElementById(id);
         if (element.classList.contains(classToRemove)) {
             element.classList.remove(classToRemove);
