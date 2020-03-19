@@ -103,7 +103,7 @@ window.addEventListener("load", () => {
 
     function filterBooksInList() {
         //filter books here
-        removeClass("filter_button_id", "invisible");
+        removeClassFromId("filter_button_id", "invisible");
     }
     let changeBook = document.getElementById("change_book_button");
     changeBook.onclick = changeSelectedBook;
