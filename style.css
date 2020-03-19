@@ -3,6 +3,7 @@ body{
     text-align: center;
     margin: 0;
     padding: 0;
+    border: 0px;
 }
 
 header{
@@ -56,19 +57,12 @@ input{
 }
 
 .confirm_section{
-    display: inline-flex;
-    text-align: left;
-    margin: 10px auto;
-    border: 0px;
     width: 230px;
+    margin: 10px auto;
 }
 
 .confirm_section p {
-    vertical-align: text-top;
     width: 100px;
-    margin-left: 10px;
-    margin-top: auto;
-    margin-bottom: auto;
 }
 
 .invisible{
@@ -81,4 +75,9 @@ input{
 
 .failure_text{
     color: red;
+}
+
+footer{
+    font-style: italic;
+    margin: auto;
 }
