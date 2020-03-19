@@ -6,7 +6,7 @@ body{
 }
 
 header{
-    height: 200px;
+    height: 180px;
     text-align: center;
 }
 
@@ -39,15 +39,26 @@ select, option {
 
 .input_fields_section{
     width: 250px;
-    margin: auto;
+    margin: 10px auto;
     text-align: left;
     line-height: 2;
+}
+
+.input_fields_section label{
+    width: 65px;
+    margin: auto 5px;
+    display: inline-block;
+    text-align: right;
+}
+
+input{
+    width: 160px;
 }
 
 .confirm_section{
     display: inline-flex;
     text-align: left;
-    margin: auto;
+    margin: 10px auto;
     border: 0px;
     width: 230px;
 }
@@ -56,6 +67,8 @@ select, option {
     vertical-align: text-top;
     width: 100px;
     margin-left: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .invisible{
