@@ -7,17 +7,24 @@ window.addEventListener("load", () => {
 
     function removeClass(id, classToRemove) {
         let element = document.getElementById(id);
-        element.classList.remove(classToRemove);
+        if (element.classList.contains(classToRemove)) {
+            element.classList.remove(classToRemove);
+        }
     }
 
     function addClassFromID(id, classToAdd) {
         let element = document.getElementById(id);
-        element.classList.add(classToAdd);
+        if (!element.classList.contains(classToAdd)) {
+
+            element.classList.add(classToAdd);
+        }
     }
 
     function addClassfromClass(className, classToAdd) {
         let element = document.getElementsByClassName(className);
-        element.classList.add(classToAdd);
+        if (!element.classList.contains(classToAdd)) {
+            element.classList.add(classToAdd);
+        }
     }
 
     function setInnerHTML(id, HTML_Content) {
@@ -37,9 +44,10 @@ window.addEventListener("load", () => {
             .catch(message => console.log(message));
         console.log(`Key is : ${apiKey}`);
     }
-
+    //denna är en test-funktion: tas bort senare.
     function loadNewList() {
         fetchNewKey();
+        //ersätt med onload
         if (apiKey) {
             for (let index = 0; index <= 10; index++) {
                 fetch(`${apiURL}?op=select&key=${apiKey}`)
@@ -48,7 +56,7 @@ window.addEventListener("load", () => {
                     })
                     .then(json => {
                         viewDataRequestStatus = json.status;
-                        viewDataRecievedArray=json.data;
+                        viewDataRecievedArray = json.data;
                     })
                     .catch(message => console.log(message));
 
@@ -95,7 +103,7 @@ window.addEventListener("load", () => {
 
     function filterBooksInList() {
         //filter books here
-        removeClass("author_and_title_input_fields_id", "invisible");
+        removeClass("filter_button_id", "invisible");
     }
     let changeBook = document.getElementById("change_book_button");
     changeBook.onclick = changeSelectedBook;
