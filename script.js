@@ -33,7 +33,7 @@ window.addEventListener("load", () => {
     }
 
     let newlistButton = document.getElementById("new_list_button");
-    newlistButton.onclick = loadNewList;
+    newlistButton.onclick = interactWithAPI('https://www.forverkliga.se/JavaScript/api/crud.php?op=select&key=3jxM9');
 
     function fetchNewKey() {
         fetch(apiURL + "?requestKey")
@@ -44,6 +44,29 @@ window.addEventListener("load", () => {
             .catch(message => console.log(message));
         console.log(`Key is : ${apiKey}`);
     }
+
+    function interactWithAPI(fetchString){
+        console.log('running "interactWithAPI..."')
+        for (let index = 0; index <10; index++) {
+            let responseStatus=false;
+            let output;
+            fetch(fetchString)
+            .then(response=>response.json()
+            .then(json=>{
+                responseStatus=json.status;
+                output={
+                    "numberOfAttempts":index,
+                    "response":output
+                }
+                }));                        
+            if (responseStatus==='success') {
+                break;
+            }
+            console.log(`output array is: ${output}`)
+            return output;
+        }
+    }
+
     //denna är en test-funktion: tas bort senare.
     function loadNewList() {
         fetchNewKey();
