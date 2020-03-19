@@ -5,6 +5,7 @@ window.addEventListener("load", () => {
     var viewDataRecievedArray = null;
     let selectedBook = null;
 
+
     function removeClassFromId(id, classToRemove) {
         let element = document.getElementById(id);
         if (element.classList.contains(classToRemove)) {
@@ -33,7 +34,12 @@ window.addEventListener("load", () => {
     }
 
     let newlistButton = document.getElementById("new_list_button");
-    newlistButton.onclick = interactWithAPI('https://www.forverkliga.se/JavaScript/api/crud.php?op=select&key=3jxM9');
+    newlistButton.onclick = function () {
+        return interactWithAPI(createViewDataString('3jxM9'));//kan använda fetchkey senare, testar med denna key nu
+        //return interactWithAPI(createAddDataString('3jxM9','Min Book','Min Författare'));
+        //return interactWithAPI(createModifyDataString('3jxM9',103379,'modifierad titel','modifierad författare'));
+        //return interactWithAPI(createDeleteDataString('3jxM9',103379));
+    }
 
     function fetchNewKey() {
         fetch(apiURL + "?requestKey")
@@ -45,63 +51,55 @@ window.addEventListener("load", () => {
         console.log(`Key is : ${apiKey}`);
     }
 
-    function interactWithAPI(fetchString){
+    async function interactWithAPI(fetchString) {
         console.log('running "interactWithAPI..."')
-        for (let index = 0; index <10; index++) {
-            let responseStatus=false;
-            let output;
-            fetch(fetchString)
-            .then(response=>response.json()
-            .then(json=>{
-                responseStatus=json.status;
-                output={
-                    "numberOfAttempts":index,
-                    "response":output
-                }
-                }));                        
-            if (responseStatus==='success') {
+        let count = 0;
+        for (let index = 0; index < 10; index++) {
+            let recievedJson = await fetch(fetchString)
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);//kontroll, returnerar en data array
+                    count++;
+                    return {
+                        "numberOfAttempts": index + 1,//+1 eftersom denna är en zero-based aray. "Number of attempts 0" har ingen betydelse.
+                        "recievedJson": json
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+            if (recievedJson.recievedJson.status === 'success') {
+                console.log(`Number of attempts: ${recievedJson.numberOfAttempts}`); //kontroll
+                console.log(`${recievedJson.recievedJson.id}`); //kontroll, returnerar undefind om inga böcker finns, eller om operationen returnerar inegn id.
                 break;
+            } else if(recievedJson.recievedJson.message==='Bad API key, use "requestKey" to request a new one.'){
+                console.log('Your key is invalid. Terminating requests. Please use "requestKey" to request a new and try again.');
+                break;
+            }else if (count >= 10) {
+                console.log(`We failed to connect to API after ${count} tries. Please try again in a few seconds.`)
             }
-            console.log(`output array is: ${output}`)
-            return output;
+            
+
         }
     }
 
-    //denna är en test-funktion: tas bort senare.
-    function loadNewList() {
-        fetchNewKey();
-        //ersätt med onload
-        if (apiKey) {
-            for (let index = 0; index <= 10; index++) {
-                fetch(`${apiURL}?op=select&key=${apiKey}`)
-                    .then(response => {
-                        return response.json()
-                    })
-                    .then(json => {
-                        viewDataRequestStatus = json.status;
-                        viewDataRecievedArray = json.data;
-                    })
-                    .catch(message => console.log(message));
-
-                if (viewDataRequestStatus === 'success') {
-                    console.log(`status after ${index+1} try(s): ${viewDataRequestStatus}`);
-                    console.log('Successfully connected to API.');
-                    console.log(viewDataRecievedArray);
-                    //varför ingen print? kanske array length =0???
-                    for (const iterator of viewDataRecievedArray) {
-                        console.log(`Författare: ${iterator.author}, Title: ${iterator.title}`)
-                    }
-                    break;
-                }
-                if (index >= 10) {
-                    console.log(`status after ${index} try(s): ${viewDataRequestStatus}`);
-                    console.log(`We failed to contact tha API after ${index} tries. Please try again in a few seconds.`)
-                }
-            }
-        } else {
-            console.log('"loadNewList" does not have a key to work with. Try again.');
-        };
+    function createViewDataString(key) {
+        return `${apiURL}?op=select&key=${key}`;
     }
+
+    function createAddDataString(key, title, author) {
+        return `${apiURL}?op=insert&key=${key}&title=${title}&author=${author}`;
+    }
+
+    function createModifyDataString(key, id, title, author) {
+        return `${apiURL}?op=update&key=${key}&id=${id}&title=${title}&author=${author}`
+    }
+
+    function createDeleteDataString(key, id) {
+        return `${apiURL}?op=delete&key=${key}&id=${id}`
+    }
+
+
 
     let bookList = document.getElementById('books');
     bookList.onchange = showChangeAndRemoveSection;
