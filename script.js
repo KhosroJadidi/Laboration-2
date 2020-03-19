@@ -2,7 +2,8 @@ window.addEventListener("load", () => {
     const apiURL = "https://www.forverkliga.se/JavaScript/api/crud.php";
     var apiKey = null;
     var viewDataRequestStatus = null;
-    var viewDataRecievedArray=null;
+    var viewDataRecievedArray = null;
+    let selectedBook = null;
 
     function removeClass(id, classToRemove) {
         let element = document.getElementById(id);
@@ -64,6 +65,13 @@ window.addEventListener("load", () => {
         } else {
             console.log('"loadNewList" does not have a key to work with. Try again.');
         };
+    }
+
+    let bookList = document.getElementById('books');
+    bookList.onchange = selectedBookListValue;
+
+    function selectedBookListValue() {
+        console.log(bookList.value);
     }
 
     let addBookButton = document.getElementById("add_book-button_id");
