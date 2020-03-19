@@ -10,8 +10,13 @@ window.addEventListener("load", () => {
         element.classList.remove(classToRemove);
     }
 
-    function addClass(id, classToAdd) {
+    function addClassFromID(id, classToAdd) {
         let element = document.getElementById(id);
+        element.classList.add(classToAdd);
+    }
+
+    function addClassfromClass(className, classToAdd) {
+        let element = document.getElementsByClassName(className);
         element.classList.add(classToAdd);
     }
 
@@ -68,9 +73,11 @@ window.addEventListener("load", () => {
     }
 
     let bookList = document.getElementById('books');
-    bookList.onchange = selectedBookListValue;
+    bookList.onchange = showChangeAndRemoveSection;
 
-    function selectedBookListValue() {
+    function showChangeAndRemoveSection() {
+        //addClassfromClass('confirm_section', 'invisible')
+        removeClass("change_and_remove_buttons_id", "invisible");
         console.log(bookList.value);
     }
 

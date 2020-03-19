@@ -1,7 +1,7 @@
 
 body{
     text-align: center;
-    margin: 0;
+    margin-bottom: 50px;
     padding: 0;
     border: 0px;
 }
@@ -78,6 +78,13 @@ input{
 }
 
 footer{
+    position: fixed;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 50px;
     font-style: italic;
-    margin: auto;
 }
