@@ -77,15 +77,28 @@
 
 </html>
 
+
+
+
+
+
+
+
 <!-- 
+
   * CSS-redigering Anders PÅGÅENDE
   * OnLoad-funktion som kontrollerar API-nyckel finns vid uppstart
+
+  ---------------(denna sektion är i princip klar!)
   * CRUD-operationer Khosro
-    - Request till API, allmän funktion
-    - Funktionens parameter är parametrar till API-requesten
-    - Repetera till success, max 10 request innan failure
-    - Spara antal requestförsök i json-svar
-    - 
+  (rad 37 i script.js: testat med samtliga CRUD operationerna. Alla fungerar!)
+    
+    - Request till API, allmän funktion (95% klar, små justeringar kan göras efter feedback från Anders)
+    - Funktionens parameter är parametrar till API-requesten (klar, även skapat funktioner som returnerar request strängar, alltså t.o.m bättre!)
+    - Repetera till success, max 10 request innan failure(klar, returnerar en Json objekt som innehåller antal försök så väl som den inhämtade datan)
+    - Spara antal requestförsök i json-svar (klar, se ovan)
+  ---------------
+
   * Hantering bokuppgifter i funktioner Khosro/Anders
     - Lägg till bok genom allmän funktion Anders
     - Ändra bok genom allmän funktion

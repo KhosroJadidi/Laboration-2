@@ -5,26 +5,34 @@ window.addEventListener("load", () => {
     var viewDataRecievedArray = null;
     let selectedBook = null;
 
+
     function removeClassFromId(id, classToRemove) {
         let element = document.getElementById(id);
-        element.classList.remove(classToRemove);
+        if (element.classList.contains(classToRemove)) {
+            element.classList.remove(classToRemove);
+        }
     }
 
     function addClassFromID(id, classToAdd) {
         let element = document.getElementById(id);
-        element.classList.add(classToAdd);
+        if (!element.classList.contains(classToAdd)) {
+
+            element.classList.add(classToAdd);
+        }
     }
 
     function addClassfromClass(className, classToAdd) {
         let element = document.getElementsByClassName(className);
-        element.classList.add(classToAdd);
+        if (!element.classList.contains(classToAdd)) {
+            element.classList.add(classToAdd);
+        }
     }
 
     function setInnerHTML(id, HTML_Content) {
         let element = document.getElementById(id);
         element.innerHTML = HTML_Content;
     }
-    
+
     async function APIRequest(querystring) {
         let respons;
         for (let count = 1; count <= 10; count++) {
@@ -47,7 +55,7 @@ window.addEventListener("load", () => {
         }
         return {'status': 'error', countrequests: 10}.json()
     }
-    
+                   
     let newlistButton = document.getElementById("new_list_button");
     newlistButton.onclick = getNewAPIkey;
 
@@ -61,6 +69,12 @@ window.addEventListener("load", () => {
             console.log(jsonRespons.countrequests);
         }
     }
+
+    function createDeleteDataString(key, id) {
+        return `${apiURL}?op=delete&key=${key}&id=${id}`
+    }
+
+
 
     let bookList = document.getElementById('books');
     bookList.onchange = showChangeAndRemoveSection;
@@ -84,7 +98,8 @@ window.addEventListener("load", () => {
 
     function filterBooksInList() {
         //filter books here
-        removeClassFromId("author_and_title_input_fields_id", "invisible");
+        removeClassFromId("input_fields_id", "invisible");
+        removeClassFromId("filter_button_section", "invisible");
     }
     let changeBook = document.getElementById("change_book_button");
     changeBook.onclick = changeSelectedBook;
