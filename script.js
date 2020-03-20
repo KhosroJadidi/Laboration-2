@@ -1,9 +1,10 @@
 window.addEventListener("load", () => {
     const apiURL = "https://www.forverkliga.se/JavaScript/api/crud.php";
-    var apiKey = null;
+    var apiKey;
     var viewDataRequestStatus = null;
     var viewDataRecievedArray = null;
-    let selectedBook = null;
+    var bookListArray;
+    var selectedBookId;
 
 
     function removeClassFromId(id, classToRemove) {
@@ -16,7 +17,6 @@ window.addEventListener("load", () => {
     function addClassFromID(id, classToAdd) {
         let element = document.getElementById(id);
         if (!element.classList.contains(classToAdd)) {
-
             element.classList.add(classToAdd);
         }
     }
@@ -33,58 +33,63 @@ window.addEventListener("load", () => {
         element.innerHTML = HTML_Content;
     }
 
-    async function APIRequest(querystring) {
-        let respons;
+    async function apiRequest(querystring) {
+        let apiRespons;
         for (let count = 1; count <= 10; count++) {
-            respons = await fetch(apiURL + querystring)
+            apiRespons = await fetch(apiURL + querystring)
             .then(response => response.json())
             .then(data => {
-                if (data.status === 'success') {
                     data.countrequests = count;
-                    console.log(data)
+                    console.log(data.status);
                     return data;
-                }
-                else {
-                    return {'status': 'error', 'countrequests': count};
-                }
             })
-            .catch(message => {
-                console.log('Catch error!');
+            .catch(() => {
                 return {'status': 'catcherror', 'countrequests': count};
             })
-            if (respons.status === 'success') {
-                return respons;
+            if (apiRespons.status === 'success') {
+                return apiRespons;
             }
         }
-        return respons;
+        return apiRespons;
     }
 
+    
     let newlistButton = document.getElementById("new_list_button");
     newlistButton.onclick = getNewAPIkey;
-
+    
     async function getNewAPIkey() {
-        let jsonRespons = await APIRequest('?requestKey')
-        if (jsonRespons.status != 'success') {
-            console.log('No new APIkey!')
+        let jsonRespons = await apiRequest('?requestKey')
+        if (jsonRespons.status === 'success') {
+            apiKey = jsonRespons.key;
+            setInnerHTML('status_field', 'Status: Ny lista skapad!')
         }
         else {
-            apiKey = jsonRespons.key;
+            setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
         }
     }
 
-    function createDeleteDataString(key, id) {
-        return `${apiURL}?op=delete&key=${key}&id=${id}`
+    async function updateBookList() {
+        let queryString = `?op=select&key=${apiKey}`;
+        let apiRespons = await apiRequest(queryString);
+        
+        if (apiRespons.status === 'success') {
+            bookListArray = apiRespons.data
+            console.log('APIn boklista uppdaterades!')
+        }
+        else {
+            setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
+        }
     }
-
-
 
     let bookList = document.getElementById('books');
     bookList.onchange = showChangeAndRemoveSection;
 
     function showChangeAndRemoveSection() {
+        selectedBookId = bookList.value
+
+        console.log(bookList.value);
         //addClassfromClass('confirm_section', 'invisible')
         removeClassFromId("change_and_remove_buttons_id", "invisible");
-        console.log(bookList.value);
     }
 
     let addBookButton = document.getElementById("add_book-button_id");
@@ -121,34 +126,64 @@ window.addEventListener("load", () => {
     let AddConfirmButton = document.getElementById('add_confirm_button');
     AddConfirmButton.onclick = addBookConfirmation;
 
-    function addBookConfirmation() {
+    async function addBookConfirmation() {
+        setInnerHTML('status_field', 'Status: Vänta...')
         let titleName = document.getElementById('title_input').value.trim();
         let authorName = document.getElementById('author_input').value.trim();
         if (titleName === "" || authorName === "") {
            console.log('Minst ett fält är tomt!');
            return;
         }
-        let addBookQueryString = `?op=insert&key=${apiKey}&title=${titleName}&author=${authorName}`;
-        let APIrespons = APIRequest(addBookQueryString);
+        let queryString = `?op=insert&key=${apiKey}&title=${titleName}&author=${authorName}`;
+        let apiRespons = await apiRequest(queryString);
 
-        console.log(APIrespons)
-
-        //if (condition) console.log('Boken är tillagd!');
-        //else console.log('Error, boken lades inte till!')
+        if (apiRespons.status === 'success') {
+            setInnerHTML('status_field', 'Status: Boken är sparad!')
+            setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests)
+        }
+        else {
+            setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
+        }
     }
 
     let changeConfirmButton = document.getElementById('change_confirm_button');
     changeConfirmButton.onclick = changeBookConfirmation;
     
-    function changeBookConfirmation() {
-        
+    async function changeBookConfirmation() {
+        setInnerHTML('status_field', 'Status: Vänta...')
+        let titleName = document.getElementById('title_input').value.trim();
+        let authorName = document.getElementById('author_input').value.trim();
+        if (titleName === "" || authorName === "") {
+           console.log('Minst ett fält är tomt!');
+           return;
+        }
+        let queryString = `?op=update&key=${apiKey}&id=${selectedBookId}&title=${titleName}&author=${authorName}`;
+        let apiRespons = await apiRequest(queryString);
+
+        if (apiRespons.status === 'success') {
+            setInnerHTML('status_field', 'Status: Boken är uppdaterad!')
+            setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests)
+        }
+        else {
+            setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
+        }
     }
     
     let removeConfirmButton = document.getElementById('remove_confirm_button');
     removeConfirmButton.onclick = removeBookConfirmation;
     
-    function removeBookConfirmation() {
-        
+    async function removeBookConfirmation() {
+        setInnerHTML('status_field', 'Status: Vänta...')
+        let queryString = `?op=delete&key=${apiKey}&id=${selectedBookId}`;
+        let apiRespons = await apiRequest(queryString);
+
+        if (apiRespons.status === 'success') {
+            setInnerHTML('status_field', 'Status: Boken är borttagen!')
+            setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests)
+        }
+        else {
+            setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
+        }
     }
 
     let resetInputFields = document.getElementById("filter_reset_button");
