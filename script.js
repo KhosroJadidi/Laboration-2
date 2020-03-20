@@ -33,66 +33,41 @@ window.addEventListener("load", () => {
         element.innerHTML = HTML_Content;
     }
 
-    let newlistButton = document.getElementById("new_list_button");
-    newlistButton.onclick = function () {
-        return interactWithAPI(createViewDataString('3jxM9'));//kan använda fetchkey senare, testar med denna key nu
-        //return interactWithAPI(createAddDataString('3jxM9','Min Book','Min Författare'));
-        //return interactWithAPI(createModifyDataString('3jxM9',103379,'modifierad titel','modifierad författare'));
-        //return interactWithAPI(createDeleteDataString('3jxM9',103379));
-    }
-
-    function fetchNewKey() {
-        fetch(apiURL + "?requestKey")
-            .then(response => {
-                return response.json();
+    async function APIRequest(querystring) {
+        let respons;
+        for (let count = 1; count <= 10; count++) {
+            respons = await fetch(apiURL + querystring)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    data.countrequests = count;
+                    console.log(data)
+                    return data;
+                }
             })
-            .then(data => (apiKey = data.key))
-            .catch(message => console.log(message));
-        console.log(`Key is : ${apiKey}`);
-    }
-
-    async function interactWithAPI(fetchString) {
-        console.log('running "interactWithAPI..."')
-        let count = 0;
-        for (let index = 0; index < 10; index++) {
-            let recievedJson = await fetch(fetchString)
-                .then(response => response.json())
-                .then(json => {
-                    console.log(json);//kontroll, returnerar en data array
-                    count++;
-                    return {
-                        "numberOfAttempts": index + 1,//+1 eftersom denna är en zero-based aray. "Number of attempts 0" har ingen betydelse.
-                        "recievedJson": json
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-            if (recievedJson.recievedJson.status === 'success') {
-                console.log(`Number of attempts: ${recievedJson.numberOfAttempts}`); //kontroll
-                console.log(`${recievedJson.recievedJson.id}`); //kontroll, returnerar undefind om inga böcker finns, eller om operationen returnerar inegn id.
-                break;
-            } else if(recievedJson.recievedJson.message==='Bad API key, use "requestKey" to request a new one.'){
-                console.log('Your key is invalid. Terminating requests. Please use "requestKey" to request a new and try again.');
-                break;
-            }else if (count >= 10) {
-                console.log(`We failed to connect to API after ${count} tries. Please try again in a few seconds.`)
+            .catch(message => {
+                console.log('Catch error!');
+                return {'status': 'catcherror', 'countrequests': count}.json()
+            })
+            if (respons.status === 'success') {
+                return respons;
             }
-            
-
         }
+        return {'status': 'error', countrequests: 10}.json()
     }
+                   
+    let newlistButton = document.getElementById("new_list_button");
+    newlistButton.onclick = getNewAPIkey;
 
-    function createViewDataString(key) {
-        return `${apiURL}?op=select&key=${key}`;
-    }
-
-    function createAddDataString(key, title, author) {
-        return `${apiURL}?op=insert&key=${key}&title=${title}&author=${author}`;
-    }
-
-    function createModifyDataString(key, id, title, author) {
-        return `${apiURL}?op=update&key=${key}&id=${id}&title=${title}&author=${author}`
+    async function getNewAPIkey() {
+        let jsonRespons = await APIRequest('?requestKey')
+        if (jsonRespons.status != 'success') {
+            console.log('No new APIkey!')
+        }
+        else {
+            console.log(jsonRespons.key);
+            console.log(jsonRespons.countrequests);
+        }
     }
 
     function createDeleteDataString(key, id) {
@@ -106,7 +81,7 @@ window.addEventListener("load", () => {
 
     function showChangeAndRemoveSection() {
         //addClassfromClass('confirm_section', 'invisible')
-        removeClass("change_and_remove_buttons_id", "invisible");
+        removeClassFromId("change_and_remove_buttons_id", "invisible");
         console.log(bookList.value);
     }
 
@@ -114,9 +89,8 @@ window.addEventListener("load", () => {
     addBookButton.onclick = addBook;
 
     function addBook() {
-        //add book here
-        removeClass("input_fields_id", "invisible");
-        removeClass("add_confirm_section", "invisible");
+        removeClassFromId("input_fields_id", "invisible");
+        removeClassFromId("add_confirm_section", "invisible");
     }
 
     let filterBooks = document.getElementById("filter_button_id");
@@ -124,19 +98,55 @@ window.addEventListener("load", () => {
 
     function filterBooksInList() {
         //filter books here
-        removeClassFromId("filter_button_id", "invisible");
+        removeClassFromId("input_fields_id", "invisible");
+        removeClassFromId("filter_button_section", "invisible");
     }
     let changeBook = document.getElementById("change_book_button");
     changeBook.onclick = changeSelectedBook;
 
     function changeSelectedBook() {
-        //change book here
+        removeClassFromId("input_fields_id", "invisible");
+        removeClassFromId("change_confirm_section", "invisible");
     }
     let removeBook = document.getElementById("remove_book_button");
     removeBook.onclick = removeSelectedBook;
 
     function removeSelectedBook() {
-        //remove selected book here
+        removeClassFromId("input_fields_id", "invisible");
+        removeClassFromId("remove_confirm_section", "invisible");
+    }
+
+    let AddConfirmButton = document.getElementById('add_confirm_button');
+    AddConfirmButton.onclick = addBookConfirmation;
+
+    function addBookConfirmation() {
+        let titleName = document.getElementById('title_input').value.trim();
+        let authorName = document.getElementById('author_input').value.trim();
+        if (titleName === "" || authorName === "") {
+           console.log('Minst ett fält är tomt!');
+           return;
+        }
+        let addBookQueryString = `?op=insert&key=${apiKey}&title=${titleName}&author=${authorName}`;
+        let APIrespons = APIRequest(addBookQueryString);
+
+        console.log(APIrespons)
+
+        //if (condition) console.log('Boken är tillagd!');
+        //else console.log('Error, boken lades inte till!')
+    }
+
+    let changeConfirmButton = document.getElementById('change_confirm_button');
+    changeConfirmButton.onclick = changeBookConfirmation;
+    
+    function changeBookConfirmation() {
+        
+    }
+    
+    let removeConfirmButton = document.getElementById('remove_confirm_button');
+    removeConfirmButton.onclick = removeBookConfirmation;
+    
+    function removeBookConfirmation() {
+        
     }
 
     let resetInputFields = document.getElementById("filter_reset_button");
