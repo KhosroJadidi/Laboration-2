@@ -169,7 +169,7 @@ window.addEventListener("load", () => {
            console.log('Minst ett fält är tomt!');
            return;
         }
-        let queryString = `?op=update&key=${apiKey}&id=${selectedBookId}&title=${titleName}&author=${authorName}`;//selectedBookId är problemet!
+        let queryString = `?op=update&key=${apiKey}&id=${selectedBookId}&title=${titleName}&author=${authorName}`;//selectedBookId är problemet!(kanske???)
         let apiRespons = await apiRequest(queryString);
 
         if (apiRespons.status === 'success') {
