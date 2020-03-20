@@ -24,52 +24,37 @@ window.addEventListener("load", () => {
         let element = document.getElementById(id);
         element.innerHTML = HTML_Content;
     }
-
-    let newlistButton = document.getElementById("new_list_button");
-    newlistButton.onclick = loadNewList;
-
-    function fetchNewKey() {
-        fetch(apiURL + "?requestKey")
-            .then(response => {
-                return response.json();
+    
+    async function APIRequest(querystring) {
+        for (let i = 0; i < 10; i++) {
+            let respons = await fetch(apiURL + querystring)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    data.countrequests = i;
+                    console.log(data)
+                    return data;
+                }
             })
-            .then(data => (apiKey = data.key))
-            .catch(message => console.log(message));
-        console.log(`Key is : ${apiKey}`);
+            .catch(message => {
+                console.log('Error message!');
+                return {'status': 'error'}.json()
+            })
+            return respons;
+        }
     }
+    
+    let newlistButton = document.getElementById("new_list_button");
+    newlistButton.onclick = getNewAPIkey;
 
-    function loadNewList() {
-        fetchNewKey();
-        if (apiKey) {
-            for (let index = 0; index <= 10; index++) {
-                fetch(`${apiURL}?op=select&key=${apiKey}`)
-                    .then(response => {
-                        return response.json()
-                    })
-                    .then(json => {
-                        viewDataRequestStatus = json.status;
-                        viewDataRecievedArray=json.data;
-                    })
-                    .catch(message => console.log(message));
-
-                if (viewDataRequestStatus === 'success') {
-                    console.log(`status after ${index+1} try(s): ${viewDataRequestStatus}`);
-                    console.log('Successfully connected to API.');
-                    console.log(viewDataRecievedArray);
-                    //varför ingen print? kanske array length =0???
-                    for (const iterator of viewDataRecievedArray) {
-                        console.log(`Författare: ${iterator.author}, Title: ${iterator.title}`)
-                    }
-                    break;
-                }
-                if (index >= 10) {
-                    console.log(`status after ${index} try(s): ${viewDataRequestStatus}`);
-                    console.log(`We failed to contact tha API after ${index} tries. Please try again in a few seconds.`)
-                }
-            }
-        } else {
-            console.log('"loadNewList" does not have a key to work with. Try again.');
-        };
+    async function getNewAPIkey() {
+        let jsonRespons = await APIRequest('?requestKey')
+        if (jsonRespons.status != 'success') {
+            console.log('No new APIkey!')
+        }
+        else {
+            console.log('New key!');
+        }
     }
 
     let bookList = document.getElementById('books');
@@ -77,7 +62,7 @@ window.addEventListener("load", () => {
 
     function showChangeAndRemoveSection() {
         //addClassfromClass('confirm_section', 'invisible')
-        removeClass("change_and_remove_buttons_id", "invisible");
+        removeClassFromId("change_and_remove_buttons_id", "invisible");
         console.log(bookList.value);
     }
 
@@ -85,9 +70,8 @@ window.addEventListener("load", () => {
     addBookButton.onclick = addBook;
 
     function addBook() {
-        //add book here
-        removeClass("input_fields_id", "invisible");
-        removeClass("add_confirm_section", "invisible");
+        removeClassFromId("input_fields_id", "invisible");
+        removeClassFromId("add_confirm_section", "invisible");
     }
 
     let filterBooks = document.getElementById("filter_button_id");
@@ -95,19 +79,54 @@ window.addEventListener("load", () => {
 
     function filterBooksInList() {
         //filter books here
-        removeClass("author_and_title_input_fields_id", "invisible");
+        removeClassFromId("author_and_title_input_fields_id", "invisible");
     }
     let changeBook = document.getElementById("change_book_button");
     changeBook.onclick = changeSelectedBook;
 
     function changeSelectedBook() {
-        //change book here
+        removeClassFromId("input_fields_id", "invisible");
+        removeClassFromId("change_confirm_section", "invisible");
     }
     let removeBook = document.getElementById("remove_book_button");
     removeBook.onclick = removeSelectedBook;
 
     function removeSelectedBook() {
-        //remove selected book here
+        removeClassFromId("input_fields_id", "invisible");
+        removeClassFromId("remove_confirm_section", "invisible");
+    }
+
+    let AddConfirmButton = document.getElementById('add_confirm_button');
+    AddConfirmButton.onclick = addBookConfirmation;
+
+    function addBookConfirmation() {
+        let titleName = document.getElementById('title_input').value.trim();
+        let authorName = document.getElementById('author_input').value.trim();
+        if (titleName === "" || authorName === "") {
+           console.log('Minst ett fält är tomt!');
+           return;
+        }
+        let addBookQueryString = `?op=insert&key=${apiKey}&title=${titleName}&author=${authorName}`;
+        let APIrespons = APIRequest(addBookQueryString);
+
+        console.log(APIrespons)
+
+        //if (condition) console.log('Boken är tillagd!');
+        //else console.log('Error, boken lades inte till!')
+    }
+
+    let changeConfirmButton = document.getElementById('change_confirm_button');
+    changeConfirmButton.onclick = changeBookConfirmation;
+    
+    function changeBookConfirmation() {
+        
+    }
+    
+    let removeConfirmButton = document.getElementById('remove_confirm_button');
+    removeConfirmButton.onclick = removeBookConfirmation;
+    
+    function removeBookConfirmation() {
+        
     }
 
     let resetInputFields = document.getElementById("filter_reset_button");
