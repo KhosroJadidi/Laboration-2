@@ -1,11 +1,22 @@
 window.addEventListener("load", () => {
     const apiURL = "https://www.forverkliga.se/JavaScript/api/crud.php";
-    var apiKey;
+    var apiKey = null;
     var viewDataRequestStatus = null;
     var viewDataRecievedArray = null;
     var bookListArray;
     var selectedBookId;
-
+    
+    async function siteLoad() {
+        if (document.cookie.includes('booklist=')) {
+            let apiKeyIndex = document.cookie.indexOf('booklist=') + 9;
+            apiKey = document.cookie.substring(apiKeyIndex, apiKeyIndex + 5);
+        }
+        else {
+            await getNewAPIkey();
+            document.cookie = 'booklist=' + apiKey;
+        }
+    };
+    siteLoad();
 
     function removeClassFromId(id, classToRemove) {
         let element = document.getElementById(id);
@@ -52,7 +63,6 @@ window.addEventListener("load", () => {
         }
         return apiRespons;
     }
-
     
     let newlistButton = document.getElementById("new_list_button");
     newlistButton.onclick = getNewAPIkey;
@@ -61,6 +71,7 @@ window.addEventListener("load", () => {
         let jsonRespons = await apiRequest('?requestKey')
         if (jsonRespons.status === 'success') {
             apiKey = jsonRespons.key;
+            document.cookie = 'booklist=' + apiKey;
             setInnerHTML('status_field', 'Status: Ny lista skapad!')
         }
         else {
@@ -77,7 +88,7 @@ window.addEventListener("load", () => {
             console.log('APIn boklista uppdaterades!')
         }
         else {
-            setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
+            setInnerHTML('status_field', 'Status: Uppdateringsfel, tryck F5!')
         }
     }
 
