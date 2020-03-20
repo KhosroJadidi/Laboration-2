@@ -1,0 +1,47 @@
+async function interactWithAPI(fetchString) {
+        console.log('running "interactWithAPI..."')
+        let count = 0;
+        for (let index = 0; index < 10; index++) {
+            let recievedJson = await fetch(fetchString)
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);//kontroll, returnerar en data array
+                    count++;
+                    return {
+                        "numberOfAttempts": index + 1,//+1 eftersom denna är en zero-based aray. "Number of attempts 0" har ingen betydelse.
+                        "recievedJson": json
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+            if (recievedJson.recievedJson.status === 'success') {
+                console.log(`Number of attempts: ${recievedJson.numberOfAttempts}`); //kontroll
+                console.log(`${recievedJson.recievedJson.id}`); //kontroll, returnerar undefind om inga böcker finns, eller om operationen returnerar inegn id.
+                break;
+            } else if(recievedJson.recievedJson.message==='Bad API key, use "requestKey" to request a new one.'){
+                console.log('Your key is invalid. Terminating requests. Please use "requestKey" to request a new and try again.');
+                break;
+            }else if (count >= 10) {
+                console.log(`We failed to connect to API after ${count} tries. Please try again in a few seconds.`)
+            }
+            
+
+        }
+    }
+
+    function createViewDataString(key) {
+        return `${apiURL}?op=select&key=${key}`;
+    }
+
+    function createAddDataString(key, title, author) {
+        return `${apiURL}?op=insert&key=${key}&title=${title}&author=${author}`;
+    }
+
+    function createModifyDataString(key, id, title, author) {
+        return `${apiURL}?op=update&key=${key}&id=${id}&title=${title}&author=${author}`
+    }
+
+    function createDeleteDataString(key, id) {
+        return `${apiURL}?op=delete&key=${key}&id=${id}`
+    }
