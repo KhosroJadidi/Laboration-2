@@ -38,16 +38,14 @@ window.addEventListener("load", () => {
                 }
             })
             .catch(message => {
-                console.log('Error message!');
-                return {'status': 'error', countrequests: count}.json()
+                console.log('Catch error!');
+                return {'status': 'catcherror', 'countrequests': count}.json()
             })
             if (respons.status === 'success') {
                 return respons;
             }
         }
         return {'status': 'error', countrequests: 10}.json()
-
-        
     }
     
     let newlistButton = document.getElementById("new_list_button");
