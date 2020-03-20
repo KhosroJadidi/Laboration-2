@@ -44,18 +44,21 @@ window.addEventListener("load", () => {
                     console.log(data)
                     return data;
                 }
+                else {
+                    return {'status': 'error', 'countrequests': count};
+                }
             })
             .catch(message => {
                 console.log('Catch error!');
-                return {'status': 'catcherror', 'countrequests': count}.json()
+                return {'status': 'catcherror', 'countrequests': count};
             })
             if (respons.status === 'success') {
                 return respons;
             }
         }
-        return {'status': 'error', countrequests: 10}.json()
+        return respons;
     }
-                   
+
     let newlistButton = document.getElementById("new_list_button");
     newlistButton.onclick = getNewAPIkey;
 
@@ -65,8 +68,7 @@ window.addEventListener("load", () => {
             console.log('No new APIkey!')
         }
         else {
-            console.log(jsonRespons.key);
-            console.log(jsonRespons.countrequests);
+            apiKey = jsonRespons.key;
         }
     }
 
