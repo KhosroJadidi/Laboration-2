@@ -27,6 +27,10 @@
         <option value="audi">Audi</option>
       </select>
     </div>
+    <div class="status_div">
+      <p id="status_field">Status: </p>
+      <p id="request_field">Antal försök: </p>
+    </div>
     <div class="add_and_filter_buttons">
       <button id="add_book-button_id">Lägg till bok</button>
       <button id="filter_button_id">Filter</button>
@@ -54,20 +58,14 @@
 
   <section class="confirm_section invisible" id="add_confirm_section">
     <button id="add_confirm_button">Lägg till</button>
-    <p id="add_status">Status: </p>
-    <p id="add_requests">Antal försök: </p>
   </section>
 
   <section class="confirm_section invisible" id="change_confirm_section">
     <button id="change_confirm_button">Ändra</button>
-    <p id="change_status">Status: </p>
-    <p id="change_requests">Antal försök: </p>
   </section>
 
   <section class="confirm_section invisible" id="remove_confirm_section">
     <button id="remove_confirm_button">Ta bort</button>
-    <p id="remove_status">Status: </p>
-    <p id="remove_requests">Antal försök: </p>
   </section>
 
 </body>
@@ -100,7 +98,7 @@
   ---------------
 
   * Hantering bokuppgifter i funktioner Khosro/Anders
-    - Lägg till bok genom allmän funktion Anders
+    - Lägg till bok genom allmän funktion Anders KLAR
     - Ändra bok genom allmän funktion
     - Ta bort bok genom allmän funktion
     - Uppdatera boklistan genom allmän funktion (UpdateBookList)
