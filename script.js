@@ -66,6 +66,7 @@ window.addEventListener("load", () => {
         else {
             setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
         }
+        updateBookList();
     }
 
     async function updateBookList() {
@@ -74,7 +75,16 @@ window.addEventListener("load", () => {
         
         if (apiRespons.status === 'success') {
             bookListArray = apiRespons.data
-            console.log('APIn boklista uppdaterades!')
+            let bookList= document.getElementById('books');
+            setInnerHTML('books','');                            
+            console.log(bookListArray);
+            for (const iterator of bookListArray) {
+                let option= document.createElement('option');
+                let optionText= document.createTextNode(`Författare: ${iterator.author}, titel: ${iterator.title}`);
+                option.appendChild(optionText);
+                bookList.appendChild(option);
+            }
+            console.log('APIn boklista uppdaterades!');
         }
         else {
             setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
@@ -83,9 +93,10 @@ window.addEventListener("load", () => {
 
     let bookList = document.getElementById('books');
     bookList.onchange = showChangeAndRemoveSection;
+    
 
     function showChangeAndRemoveSection() {
-        selectedBookId = bookList.value
+        selectedBookId = bookList.value;
 
         console.log(bookList.value);
         //addClassfromClass('confirm_section', 'invisible')
@@ -138,8 +149,9 @@ window.addEventListener("load", () => {
         let apiRespons = await apiRequest(queryString);
 
         if (apiRespons.status === 'success') {
-            setInnerHTML('status_field', 'Status: Boken är sparad!')
-            setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests)
+            setInnerHTML('status_field', 'Status: Boken är sparad!');
+            setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests);
+            updateBookList();
         }
         else {
             setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
@@ -157,12 +169,13 @@ window.addEventListener("load", () => {
            console.log('Minst ett fält är tomt!');
            return;
         }
-        let queryString = `?op=update&key=${apiKey}&id=${selectedBookId}&title=${titleName}&author=${authorName}`;
+        let queryString = `?op=update&key=${apiKey}&id=${selectedBookId}&title=${titleName}&author=${authorName}`;//selectedBookId är problemet!(kanske???)
         let apiRespons = await apiRequest(queryString);
 
         if (apiRespons.status === 'success') {
             setInnerHTML('status_field', 'Status: Boken är uppdaterad!')
             setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests)
+            updateBookList();
         }
         else {
             setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
@@ -194,4 +207,7 @@ window.addEventListener("load", () => {
         let titleField = document.getElementById("title_id");
         authorField.value = titleField.value = "";
     }
+
+    
 });
+
