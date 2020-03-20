@@ -34,22 +34,26 @@ window.addEventListener("load", () => {
     }
 
     async function APIRequest(querystring) {
-        for (let i = 0; i < 10; i++) {
-            let respons = await fetch(apiURL + querystring)
+        let respons;
+        for (let count = 1; count <= 10; count++) {
+            respons = await fetch(apiURL + querystring)
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    data.countrequests = i;
+                    data.countrequests = count;
                     console.log(data)
                     return data;
                 }
             })
             .catch(message => {
-                console.log('Error message!');
-                return {'status': 'error'}.json()
+                console.log('Catch error!');
+                return {'status': 'catcherror', 'countrequests': count}.json()
             })
-            return respons;
+            if (respons.status === 'success') {
+                return respons;
+            }
         }
+        return {'status': 'error', countrequests: 10}.json()
     }
                    
     let newlistButton = document.getElementById("new_list_button");
@@ -61,7 +65,8 @@ window.addEventListener("load", () => {
             console.log('No new APIkey!')
         }
         else {
-            console.log('New key!');
+            console.log(jsonRespons.key);
+            console.log(jsonRespons.countrequests);
         }
     }
 
