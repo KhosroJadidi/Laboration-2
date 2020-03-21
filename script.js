@@ -97,7 +97,7 @@ window.addEventListener("load", () => {
             console.log(bookListArray);
             for (const iterator of bookListArray) {
                 let option= document.createElement('option');
-                let optionText= document.createTextNode(`Författare: ${iterator.author}, titel: ${iterator.title}`);
+                let optionText= document.createTextNode(`Författare: ${iterator.author}, titel: ${iterator.title}, id: ${iterator.id}`);
                 option.appendChild(optionText);
                 bookList.appendChild(option);
             }
@@ -126,6 +126,8 @@ window.addEventListener("load", () => {
     function addBook() {
         removeClassFromId("input_fields_id", "invisible");
         removeClassFromId("add_confirm_section", "invisible");
+        addClassFromID("change_confirm_button","invisible");
+        addClassFromID("remove_confirm_button","invisible");
     }
 
     let filterBooks = document.getElementById("filter_button_id");
@@ -142,6 +144,10 @@ window.addEventListener("load", () => {
     function changeSelectedBook() {
         removeClassFromId("input_fields_id", "invisible");
         removeClassFromId("change_confirm_section", "invisible");
+        removeClassFromId("id_input","invisible");
+        addClassFromID("remove_confirm_button","invisible");
+        removeClassFromId("change_confirm_button","invisible");
+        addClassFromID("add_confirm_button","invisible");
     }
     let removeBook = document.getElementById("remove_book_button");
     removeBook.onclick = removeSelectedBook;
@@ -149,6 +155,9 @@ window.addEventListener("load", () => {
     function removeSelectedBook() {
         removeClassFromId("input_fields_id", "invisible");
         removeClassFromId("remove_confirm_section", "invisible");
+        removeClassFromId("id_input","invisible");
+        removeClassFromId("remove_confirm_button","invisible");
+        addClassFromID("change_confirm_button","invisible");
     }
 
     let AddConfirmButton = document.getElementById('add_confirm_button');
@@ -180,13 +189,14 @@ window.addEventListener("load", () => {
     
     async function changeBookConfirmation() {
         setInnerHTML('status_field', 'Status: Vänta...')
+        let bookId= document.getElementById('id_input').value.trim();
         let titleName = document.getElementById('title_input').value.trim();
         let authorName = document.getElementById('author_input').value.trim();
         if (titleName === "" || authorName === "") {
            console.log('Minst ett fält är tomt!');
            return;
         }
-        let queryString = `?op=update&key=${apiKey}&id=${selectedBookId}&title=${titleName}&author=${authorName}`;//selectedBookId är problemet!(kanske???)
+        let queryString = `?op=update&key=${apiKey}&id=${bookId}&title=${titleName}&author=${authorName}`;//selectedBookId är problemet!(kanske???)
         let apiRespons = await apiRequest(queryString);
 
         if (apiRespons.status === 'success') {
@@ -204,12 +214,13 @@ window.addEventListener("load", () => {
     
     async function removeBookConfirmation() {
         setInnerHTML('status_field', 'Status: Vänta...')
-        let queryString = `?op=delete&key=${apiKey}&id=${selectedBookId}`;
+        let bookId= document.getElementById('id_input').value.trim();
+        let queryString = `?op=delete&key=${apiKey}&id=${bookId}`;
         let apiRespons = await apiRequest(queryString);
 
         if (apiRespons.status === 'success') {
-            setInnerHTML('status_field', 'Status: Boken är borttagen!')
-            setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests)
+            setInnerHTML('status_field', 'Status: Boken är borttagen!');
+            setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests);
             updateBookList();
         }
         else {
