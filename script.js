@@ -15,6 +15,8 @@ window.addEventListener("load", () => {
             await getNewAPIkey();
             document.cookie = 'booklist=' + apiKey;
         }
+        updateBookList();
+        console.log('Cookie contains: ' + document.cookie);
     };
     siteLoad();
 
@@ -58,6 +60,10 @@ window.addEventListener("load", () => {
                 return {'status': 'catcherror', 'countrequests': count};
             })
             if (apiRespons.status === 'success') {
+                return apiRespons;
+            }
+            else if (apiRespons.message.substring(0,11) ==='Bad API key') {
+                await getNewAPIkey();
                 return apiRespons;
             }
         }
