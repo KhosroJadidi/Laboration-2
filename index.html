@@ -2,17 +2,19 @@
 <html lang="sv">
 
 <head>
+  <meta charset="utf-8"/>
   <link rel="stylesheet" href="style.css">
-  <script type="text/javascript" src="script.js"></script>
+  <script src="script.js"></script>
+  <title>Bokfavoriten</title>
 </head>
-
+  
 <body>
   <header>
     <div id="banner"></div>
     <h1>Välkommen till bokfavoriten</h1>
   </header>
 
-  <section class="Main_section">
+  <div class="Main_section">
     <div class="new_list_button">
       <button id="new_list_button" >
         Ny Lista
@@ -34,69 +36,37 @@
       <button id="add_book-button_id">Lägg till bok</button>
       <button id="filter_button_id">Filter</button>
     </div>
-  </section>
+  </div>
 
-  <section class="change_remove_section invisible" id="change_remove_section_id">
+  <div class="change_remove_section invisible" id="change_remove_section_id">
     <button id="change_book_button">Ändra bok</button>
     <button id="remove_book_button">Ta bort bok</button>
-  </section>
+  </div>
 
-  <section class="input_fields_section invisible" id="input_fields_section_id">
-    <label for="author_name">Författare</label>
+  <div class="input_fields_section invisible" id="input_fields_section_id">
+    <label for="author_input">Författare</label>
     <input type="text" name="author_name" id="author_input"/>
     <br>
-    <label for="title">Titel</label>
+    <label for="title_input">Titel</label>
     <input type="text" name="title" id="title_input"/>
     <br>
-  </section>
+  </div>
 
-  <section class="filter_clear_section invisible" id="filter_clear_section_id">
+  <div class="filter_clear_section invisible" id="filter_clear_section_id">
     <button id="filter_confirm_button" >Filtrera</button>    
     <button id="filter_reset_button">Rensa filter</button>
-  </section>
+  </div>
 
-  <section class="confirm_section" id="confirm_section_id">
+  <div class="confirm_section" id="confirm_section_id">
     <button class="invisible" id="add_confirm_button">Lägg till</button>
     <button class="invisible" id="change_confirm_button">Ändra</button>
     <button class="invisible" id="remove_confirm_button">Ta bort</button>
-  </section>
+  </div>
 
 
+  <footer>
+    <p>Made by Khosro Jadidi och Anders Orlinder, IT-Högskolan 2020</p>
+  </footer>
 </body>
- <footer>
-   <p>Made by Khosro Jadidi och Anders Orlinder, IT-Högskolan 2020</p>
-</footer>
 
 </html>
-
-
-
-
-<!-- 
-  * CSS-redigering Anders PÅGÅENDE
-  * OnLoad-funktion som kontrollerar API-nyckel finns vid uppstart Anders KLAR
-    - Utfall vid utgången API-nyckel? KLAR
-
-  ---------------(KLAR)
-  * CRUD-operationer Khosro
-    - Request till API, allmän funktion 
-    - Funktionens parameter är taggen till API-requesten
-    - Repetera till success, max 10 request innan failure
-    - Spara antal requestförsök i json-svar
-  ---------------
-
-  * Hantering bokuppgifter i funktioner Khosro/Anders
-    - Lägg till bok genom allmän funktion Anders KLAR
-    - Ändra bok genom allmän funktion KLAR
-    - Ta bort bok genom allmän funktion KLAR
-    - Uppdatera boklistan genom allmän funktion (UpdateBookList)
-    - Filtrera boklistan
-    -
-  * Nedre knappsektionerna Anders KLAR
-  * Funktionalitet Listmarkering Khosro/Anders DELVIS KLAR
-  * Boklistarray KLAR
-  * Bokfilterarray
-  * Cookie Anders KLAR
-  * Inaktivera knappar under requests?
-  * Göm/Visa sektioner Khosro
--->
