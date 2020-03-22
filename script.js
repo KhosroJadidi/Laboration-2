@@ -4,6 +4,7 @@ window.addEventListener("load", () => {
     var bookListArray;
     var filterListArray = [];
     var selectedIndexInBookListField;
+    var filterActive = false;
     
     async function siteLoad() {
         if (document.cookie.includes('booklist=')) {
@@ -94,7 +95,7 @@ window.addEventListener("load", () => {
     }
 
     function updateBookListField(listArray) {
-        setInnerHTML('books','');                            
+        setInnerHTML('books','');
         console.log(listArray);
         for (const iterator of listArray) {
             let option = document.createElement('option');
@@ -192,7 +193,13 @@ window.addEventListener("load", () => {
     
     async function changeBookConfirmation() {
         setInnerHTML('status_field', 'Status: Vänta...')
-        let bookId = bookListArray[selectedIndexInBookListField].id;
+        let bookId;
+        if (filterActive) {
+            bookId = filterListArray[selectedIndexInBookListField].id;
+        }
+        else {
+            bookId  = bookListArray[selectedIndexInBookListField].id;
+        }
         let titleName = document.getElementById('title_input').value.trim();
         let authorName = document.getElementById('author_input').value.trim();
         if (titleName === "" || authorName === "") {
@@ -222,7 +229,13 @@ window.addEventListener("load", () => {
     
     async function removeBookConfirmation() {
         setInnerHTML('status_field', 'Status: Vänta...')
-        let bookId = bookListArray[selectedIndexInBookListField].id;
+        let bookId;
+        if (filterActive) {
+            bookId = filterListArray[selectedIndexInBookListField].id;
+        }
+        else {
+            bookId  = bookListArray[selectedIndexInBookListField].id;
+        }
         let queryString = `?op=delete&key=${apiKey}&id=${bookId}`;
         let apiRespons = await apiRequest(queryString);
 
@@ -245,6 +258,7 @@ window.addEventListener("load", () => {
     filterConfirmButton.onclick = filterBookList;
 
     function filterBookList() {
+        filterActive = true;
         let authorField = document.getElementById('author_input').value.trim();
         let titleField = document.getElementById('title_input').value.trim();
         for (const book of bookListArray) {
@@ -259,12 +273,12 @@ window.addEventListener("load", () => {
     resetInputFields.onclick = resetFilter;
 
     function resetFilter() {
-        let authorField = document.getElementById("author_id");
-        let titleField = document.getElementById("title_id");
-        authorField.value = titleField.value = "";
+        filterListArray = [];
+        document.getElementById("author_id").value = '';
+        document.getElementById("title_id").value = '';
         updateBookList();
     }
 
-    
+
 });
 
