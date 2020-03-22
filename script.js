@@ -274,8 +274,8 @@ window.addEventListener("load", () => {
 
     function resetFilter() {
         filterListArray = [];
-        document.getElementById("author_id").value = '';
-        document.getElementById("title_id").value = '';
+        document.getElementById("author_input").value = '';
+        document.getElementById("title_input").value = '';
         updateBookList();
     }
 
