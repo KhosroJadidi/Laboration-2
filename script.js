@@ -5,7 +5,40 @@ window.addEventListener("load", () => {
     var filterListArray = [];
     var selectedIndexInBookListField;
     var filterActive = false;
+
+    let newlistButton = document.getElementById("new_list_button");
+    newlistButton.onclick = getNewAPIkey;
     
+    let bookList = document.getElementById('books');
+    bookList.onchange = onSelectedBook;
+
+    let addBookButton = document.getElementById("add_book-button_id");
+    addBookButton.onclick = addBook;
+
+    let filterBooks = document.getElementById("filter_button_id");
+    filterBooks.onclick = filterBooksInList;
+
+    let changeBook = document.getElementById("change_book_button");
+    changeBook.onclick = changeSelectedBook;
+
+    let removeBook = document.getElementById("remove_book_button");
+    removeBook.onclick = removeSelectedBook;
+
+    let AddConfirmButton = document.getElementById('add_confirm_button');
+    AddConfirmButton.onclick = addBookConfirmation;
+
+    let changeConfirmButton = document.getElementById('change_confirm_button');
+    changeConfirmButton.onclick = changeBookConfirmation;
+
+    let removeConfirmButton = document.getElementById('remove_confirm_button');
+    removeConfirmButton.onclick = removeBookConfirmation;
+
+    let filterConfirmButton = document.getElementById('filter_confirm_button');
+    filterConfirmButton.onclick = filterBookList;
+
+    let resetInputFields = document.getElementById("filter_reset_button");
+    resetInputFields.onclick = resetFilter;
+
     async function siteLoad() {
         if (document.cookie.includes('booklist=')) {
             let apiKeyIndex = document.cookie.indexOf('booklist=') + 9;
@@ -16,18 +49,17 @@ window.addEventListener("load", () => {
             document.cookie = 'booklist=' + apiKey;
         }
         updateBookList();
-        console.log('Cookie contains: ' + document.cookie);
     };
     siteLoad();
 
-    function addTagById(id) {
+    function showTagById(id) {
         let element = document.getElementById(id);
         if (element.classList.contains("invisible")) {
             element.classList.remove("invisible");
         }
     }
 
-    function removeTagById(id) {
+    function hideTagById(id) {
         let element = document.getElementById(id);
         if (!element.classList.contains("invisible")) {
             element.classList.add("invisible");
@@ -46,7 +78,6 @@ window.addEventListener("load", () => {
             .then(response => response.json())
             .then(data => {
                     data.countrequests = count;
-                    console.log(data.status);
                     return data;
             })
             .catch(() => {
@@ -62,9 +93,6 @@ window.addEventListener("load", () => {
         }
         return apiRespons;
     }
-    
-    let newlistButton = document.getElementById("new_list_button");
-    newlistButton.onclick = getNewAPIkey;
     
     async function getNewAPIkey() {
         let jsonRespons = await apiRequest('?requestKey')
@@ -86,8 +114,6 @@ window.addEventListener("load", () => {
             bookListArray = apiRespons.data
             let bookList = document.getElementById('books');
             updateBookListField(bookListArray)
-            
-            console.log('APIn boklista uppdaterades!');
         }
         else {
             setInnerHTML('status_field', 'Status: Uppdateringsfel, tryck F5!')
@@ -96,72 +122,55 @@ window.addEventListener("load", () => {
 
     function updateBookListField(listArray) {
         setInnerHTML('books','');
-        console.log(listArray);
         for (const iterator of listArray) {
             let option = document.createElement('option');
-            option.setAttribute('id', iterator.id)
+            option.setAttribute('id', iterator.id);
             option.appendChild(document.createTextNode(`Författare: ${iterator.author}, titel: ${iterator.title}`));
             bookList.appendChild(option);
         }
     }
 
-    let bookList = document.getElementById('books');
-    bookList.onchange = onSelectedBook;
-
     function onSelectedBook() {
         setInnerHTML('status_field', 'Status:')
         setInnerHTML('request_field', 'Antal försök: ');
         selectedIndexInBookListField = bookList.selectedIndex;
-        addTagById("change_remove_section_id");
+        showTagById("change_remove_section_id");
         document.getElementById('author_input').value = bookListArray[selectedIndexInBookListField].author;
         document.getElementById('title_input').value = bookListArray[selectedIndexInBookListField].title;
     }
 
-    let addBookButton = document.getElementById("add_book-button_id");
-    addBookButton.onclick = addBook;
-
     function addBook() {
-        removeTagById("filter_clear_section_id");
-        removeTagById("change_confirm_button");
-        removeTagById("remove_confirm_button");
-        addTagById("input_fields_section_id");
-        addTagById("add_confirm_button");
+        hideTagById("filter_clear_section_id");
+        hideTagById("change_confirm_button");
+        hideTagById("remove_confirm_button");
+        showTagById("input_fields_section_id");
+        showTagById("add_confirm_button");
     }
-
-    let filterBooks = document.getElementById("filter_button_id");
-    filterBooks.onclick = filterBooksInList;
 
     function filterBooksInList() {
         //filter books here
-        removeTagById("add_confirm_button");
-        removeTagById("change_confirm_button");
-        removeTagById("remove_confirm_button");
-        addTagById("input_fields_section_id");
-        addTagById("filter_clear_section_id");
+        hideTagById("add_confirm_button");
+        hideTagById("change_confirm_button");
+        hideTagById("remove_confirm_button");
+        showTagById("input_fields_section_id");
+        showTagById("filter_clear_section_id");
     }
-    let changeBook = document.getElementById("change_book_button");
-    changeBook.onclick = changeSelectedBook;
 
     function changeSelectedBook() {
-        removeTagById("add_confirm_button");
-        removeTagById("filter_clear_section_id");
-        removeTagById("remove_confirm_button");
-        addTagById("input_fields_section_id");
-        addTagById("change_confirm_button");
+        hideTagById("add_confirm_button");
+        hideTagById("filter_clear_section_id");
+        hideTagById("remove_confirm_button");
+        showTagById("input_fields_section_id");
+        showTagById("change_confirm_button");
     }
-    let removeBook = document.getElementById("remove_book_button");
-    removeBook.onclick = removeSelectedBook;
 
     function removeSelectedBook() {
-        removeTagById("add_confirm_button");
-        removeTagById("filter_clear_section_id");
-        removeTagById("change_confirm_button");
-        addTagById("input_fields_section_id");
-        addTagById("remove_confirm_button");
+        hideTagById("add_confirm_button");
+        hideTagById("filter_clear_section_id");
+        hideTagById("change_confirm_button");
+        showTagById("input_fields_section_id");
+        showTagById("remove_confirm_button");
     }
-
-    let AddConfirmButton = document.getElementById('add_confirm_button');
-    AddConfirmButton.onclick = addBookConfirmation;
 
     async function addBookConfirmation() {
         setInnerHTML('status_field', 'Status: Vänta...')
@@ -178,8 +187,8 @@ window.addEventListener("load", () => {
             setInnerHTML('status_field', 'Status: Boken är sparad!');
             setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests);
             updateBookList();
-            removeTagById("add_confirm_button");
-            removeTagById("input_fields_section_id");
+            hideTagById("add_confirm_button");
+            hideTagById("input_fields_section_id");
             document.getElementById('author_input').value = '';
             document.getElementById('title_input').value = '';
         }
@@ -187,9 +196,6 @@ window.addEventListener("load", () => {
             setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
         }
     }
-
-    let changeConfirmButton = document.getElementById('change_confirm_button');
-    changeConfirmButton.onclick = changeBookConfirmation;
     
     async function changeBookConfirmation() {
         setInnerHTML('status_field', 'Status: Vänta...')
@@ -213,8 +219,8 @@ window.addEventListener("load", () => {
             setInnerHTML('status_field', 'Status: Boken är uppdaterad!')
             setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests)
             updateBookList();
-            removeTagById("change_confirm_button");
-            removeTagById("input_fields_section_id");
+            hideTagById("change_confirm_button");
+            hideTagById("input_fields_section_id");
             document.getElementById('author_input').value = '';
             document.getElementById('title_input').value = '';
             selectedIndexInBookListField = null;
@@ -223,9 +229,6 @@ window.addEventListener("load", () => {
             setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
         }
     }
-    
-    let removeConfirmButton = document.getElementById('remove_confirm_button');
-    removeConfirmButton.onclick = removeBookConfirmation;
     
     async function removeBookConfirmation() {
         setInnerHTML('status_field', 'Status: Vänta...')
@@ -243,8 +246,8 @@ window.addEventListener("load", () => {
             setInnerHTML('status_field', 'Status: Boken är borttagen!');
             setInnerHTML('request_field', 'Antal försök: ' + apiRespons.countrequests);
             updateBookList();
-            removeTagById("remove_confirm_button");
-            removeTagById("input_fields_section_id");
+            hideTagById("remove_confirm_button");
+            hideTagById("input_fields_section_id");
             document.getElementById('author_input').value = '';
             document.getElementById('title_input').value = '';
             selectedIndexInBookListField = null;
@@ -253,9 +256,6 @@ window.addEventListener("load", () => {
             setInnerHTML('status_field', 'Status: Serverfel, försök igen!')
         }
     }
-
-    let filterConfirmButton = document.getElementById('filter_confirm_button');
-    filterConfirmButton.onclick = filterBookList;
 
     function filterBookList() {
         filterActive = true;
@@ -269,16 +269,13 @@ window.addEventListener("load", () => {
         updateBookListField(filterListArray);
     }
 
-    let resetInputFields = document.getElementById("filter_reset_button");
-    resetInputFields.onclick = resetFilter;
-
     function resetFilter() {
         filterListArray = [];
+        hideTagById("input_fields_section_id");
+        hideTagById("filter_clear_section_id");
         document.getElementById("author_input").value = '';
         document.getElementById("title_input").value = '';
         updateBookList();
     }
-
-
 });
 
