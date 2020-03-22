@@ -16,11 +16,10 @@
     <div class="new_list_button">
       <button id="new_list_button" >
         Ny Lista
-        <!-- Ska vi skriva ut det nya ID-numret på hemsidan? -->
       </button>
     </div>
     <div class="listbox">
-      <select id="books" size="8">
+      <select id="books" size="5">
         <!-- <option value="volvo" >Volvo</option>
         <option value="saab">Saab</option>
         <option value="fiat">Fiat</option>
@@ -28,8 +27,8 @@
       </select>
     </div>
     <div class="status_div">
-      <p id="status_field">Status: </p>
-      <p id="request_field">Antal försök: </p>
+      <p id="status_field">Status:</p>
+      <p id="request_field">Antal försök:</p>
     </div>
     <div class="add_and_filter_buttons">
       <button id="add_book-button_id">Lägg till bok</button>
@@ -37,15 +36,12 @@
     </div>
   </section>
 
-  <section class="change_and_remove_section invisible" id="change_and_remove_buttons_id">
+  <section class="change_remove_section invisible" id="change_remove_section_id">
     <button id="change_book_button">Ändra bok</button>
     <button id="remove_book_button">Ta bort bok</button>
   </section>
 
-  <section class="input_fields_section invisible" id="input_fields_id">
-    <label for="book_id">id</label>
-    <input class="invisible" type="text" name="book_id" id="id_input"/>
-    <br>
+  <section class="input_fields_section invisible" id="input_fields_section_id">
     <label for="author_name">Författare</label>
     <input type="text" name="author_name" id="author_input"/>
     <br>
@@ -54,22 +50,17 @@
     <br>
   </section>
 
-  <section class="filter_confirm_clear_section invisible">
+  <section class="filter_clear_section invisible" id="filter_clear_section_id">
     <button id="filter_confirm_button" >Filtrera</button>    
     <button id="filter_reset_button">Rensa filter</button>
   </section>
 
-  <section class="confirm_section invisible" id="add_confirm_section">
-    <button id="add_confirm_button">Lägg till</button>
+  <section class="confirm_section" id="confirm_section_id">
+    <button class="invisible" id="add_confirm_button">Lägg till</button>
+    <button class="invisible" id="change_confirm_button">Ändra</button>
+    <button class="invisible" id="remove_confirm_button">Ta bort</button>
   </section>
 
-  <section class="confirm_section invisible" id="change_confirm_section">
-    <button id="change_confirm_button">Ändra</button>
-  </section>
-
-  <section class="confirm_section invisible" id="remove_confirm_section">
-    <button id="remove_confirm_button">Ta bort</button>
-  </section>
 
 </body>
  <footer>
@@ -81,12 +72,7 @@
 
 
 
-
-
-
-
 <!-- 
-
   * CSS-redigering Anders PÅGÅENDE
   * OnLoad-funktion som kontrollerar API-nyckel finns vid uppstart Anders KLAR
     - Utfall vid utgången API-nyckel? KLAR
