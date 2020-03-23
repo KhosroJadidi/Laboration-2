@@ -1,7 +1,7 @@
 
 body{
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     padding: 0;
     border: 0px;
     font-size: 18px;
@@ -76,14 +76,6 @@ input{
 
 .invisible{
     display: none;
-}
-
-.success_text{
-    color: green;
-}
-
-.failure_text{
-    color: red;
 }
 
 footer{
