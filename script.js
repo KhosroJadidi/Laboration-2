@@ -26,8 +26,8 @@ window.addEventListener("load", () => {
     let filterConfirmButton = document.getElementById('filter_confirm_button');
     filterConfirmButton.onclick = filterBookList;
 
-    let resetInputFields = document.getElementById("filter_reset_button");
-    resetInputFields.onclick = resetFilter;
+    let resetFilterButton = document.getElementById("filter_reset_button");
+    resetFilterButton.onclick = resetFilter;
 
     let changeBook = document.getElementById("change_book_button");
     changeBook.onclick = printChangeMenu;
