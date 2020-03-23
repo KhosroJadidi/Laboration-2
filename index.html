@@ -1,101 +1,65 @@
 <!DOCTYPE html>
 <html lang="sv">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Bokfavoriten</title>
+  </head>
+    
+  <body>
+    <header>
+      <div id="banner"></div>
+      <h1>Välkommen till bokfavoriten</h1>
+    </header>
 
-<head>
-  <meta charset="utf-8"/>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
-  <title>Bokfavoriten</title>
-</head>
-  
-<body>
-  <header>
-    <div id="banner"></div>
-    <h1>Välkommen till bokfavoriten</h1>
-  </header>
+    <section class="Main_section">
+      <div class="new_list_button">
+        <button id="new_list_button" >
+          Ny Lista
+        </button>
+      </div>
+      <div class="listbox">
+        <select id="books" size="5">
+        </select>
+      </div>
+      <div class="status_div">
+        <p id="status_field">Status:</p>
+        <p id="request_field">Antal försök:</p>
+      </div>
+      <div class="add_and_filter_buttons">
+        <button id="add_book-button_id">Lägg till bok</button>
+        <button id="filter_button_id">Filter</button>
+      </div>
+    </section>
 
-  <div class="Main_section">
-    <div class="new_list_button">
-      <button id="new_list_button" >
-        Ny Lista
-      </button>
-    </div>
-    <div class="listbox">
-      <select id="books" size="5">
-      </select>
-    </div>
-    <div class="status_div">
-      <p id="status_field">Status:</p>
-      <p id="request_field">Antal försök:</p>
-    </div>
-    <div class="add_and_filter_buttons">
-      <button id="add_book-button_id">Lägg till bok</button>
-      <button id="filter_button_id">Filter</button>
-    </div>
-  </div>
+    <section class="change_remove_section invisible" id="change_remove_section_id">
+      <button id="change_book_button">Ändra bok</button>
+      <button id="remove_book_button">Ta bort bok</button>
+    </section>
 
-  <div class="change_remove_section invisible" id="change_remove_section_id">
-    <button id="change_book_button">Ändra bok</button>
-    <button id="remove_book_button">Ta bort bok</button>
-  </div>
+    <section class="input_fields_section invisible" id="input_fields_section_id">
+      <label for="author_input">Författare</label>
+      <input type="text" name="author_name" id="author_input"/>
+      <br>
+      <label for="title_input">Titel</label>
+      <input type="text" name="title" id="title_input"/>
+      <br>
+    </section>
 
-  <div class="input_fields_section invisible" id="input_fields_section_id">
-    <label for="author_input">Författare</label>
-    <input type="text" name="author_name" id="author_input"/>
-    <br>
-    <label for="title_input">Titel</label>
-    <input type="text" name="title" id="title_input"/>
-    <br>
-  </div>
+    <section class="filter_clear_section invisible" id="filter_clear_section_id">
+      <button id="filter_confirm_button" >Filtrera</button>    
+      <button id="filter_reset_button">Rensa filter</button>
+    </section>
 
-  <div class="filter_clear_section invisible" id="filter_clear_section_id">
-    <button id="filter_confirm_button" >Filtrera</button>    
-    <button id="filter_reset_button">Rensa filter</button>
-  </div>
+    <section class="confirm_section" id="confirm_section_id">
+      <button class="invisible" id="add_confirm_button">Lägg till</button>
+      <button class="invisible" id="change_confirm_button">Ändra</button>
+      <button class="invisible" id="remove_confirm_button">Ta bort</button>
+    </section>
 
-  <div class="confirm_section" id="confirm_section_id">
-    <button class="invisible" id="add_confirm_button">Lägg till</button>
-    <button class="invisible" id="change_confirm_button">Ändra</button>
-    <button class="invisible" id="remove_confirm_button">Ta bort</button>
-  </div>
-
-
-  <footer>
-    <p>Made by Khosro Jadidi och Anders Orlinder, IT-Högskolan 2020</p>
-  </footer>
-</body>
-
+    <footer>
+      <p>Made by Khosro Jadidi och Anders Orlinder, IT-Högskolan 2020</p>
+    </footer>
+  </body>
 </html>
-
-
-
-
-<!-- 
-  * CSS-redigering Anders PÅGÅENDE
-  * OnLoad-funktion som kontrollerar API-nyckel finns vid uppstart Anders KLAR
-    - Utfall vid utgången API-nyckel? KLAR
-
-  ---------------(KLAR)
-  * CRUD-operationer Khosro
-    - Request till API, allmän funktion KLAR
-    - Funktionens parameter är taggen till API-requesten KLAR
-    - Repetera till success, max 10 request innan failure KLAR
-    - Spara antal requestförsök i json-svar KLAR
-  ---------------
-
-  * Hantering bokuppgifter i funktioner Khosro/Anders
-    - Lägg till bok genom allmän funktion Anders KLAR
-    - Ändra bok genom allmän funktion KLAR
-    - Ta bort bok genom allmän funktion KLAR
-    - Uppdatera boklistarrayen genom allmän funktion KLAR
-    - Uppdatera boklistfältet genom allmän funktion KLAR
-    - Filtrera boklistan KLAR?
-    -
-  * Nedre knappsektionerna Anders KLAR
-  * Funktionalitet Listmarkering Khosro/Anders KLAR
-  * Boklistarray KLAR
-  * Bokfilterarray KLAR
-  * Cookie Anders KLAR
-  * Inaktivera knappar under requests?
-  * Göm/Visa sektioner Khosro KLAR?
--->
